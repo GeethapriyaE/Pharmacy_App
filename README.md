@@ -15,8 +15,6 @@ For a transparent usage:
   "imports": {
     "preact":  "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/",
-    "react-icons/fa":  "https://cdn.jsdelivr.net/gh/urielch/react-icons-fa@1.0.9/mod.ts",
-    "react-icons/fa/": "https://cdn.jsdelivr.net/gh/urielch/react-icons-fa@1.0.9/ico/",
   }
 }
 ```

@@ -1,10 +1,16 @@
-import React from 'react'
-import Header from './Header'
+
+import React from 'react';
+import Header from './Header';
+import MainCarousel from './MainCarousel';
 
 const Home = () => {
   return (
-    <div className="w-full h-auto flex flex-col items-center justify-center bg-primary">
-      <Header />
+    <div>
+      <div className='h-auto min-w-[680px] bg-primary flex justify-center items-center '>
+        <Header />
+      </div>
+      <div className="border-b border-gray-200 w-full"></div>
+      <MainCarousel />
     </div>
   )
 }

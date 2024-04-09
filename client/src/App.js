@@ -9,6 +9,7 @@ import { AnimatePresence } from 'framer-motion'
 import { validateUser } from './api';
 import { actionType } from './context/reducer';
 import { useStateValue } from './context/StateProvider';
+import Product from './components/Product/Product';
 const App = () => {
 
     const [{ user }, dispatch] = useStateValue();
@@ -48,6 +49,7 @@ const App = () => {
                     <Route path='/login' element={<Login setAuth={setAuth} />} />
                     <Route path='/*' element={<Home />} />
                     <Route path='/aboutus' element={<AboutUs />} />
+                    <Route path='/products' element={<Product />} />
                     <Route path='/contactus' element={<ContactUs />} />
                 </Routes>
             </div>

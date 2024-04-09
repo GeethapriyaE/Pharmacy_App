@@ -42,7 +42,8 @@ const Header = () => {
                 <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
                 <span className="sr-only">items in cart, view bag</span>
             </a>
-    <   div className='flex items-center cursor-pointer gap-2 relative'> {/* Removed ml-auto from this container */}
+    <div onMouseEnter={() => setIsMenu(true)}
+                onMouseLeave={() => setIsMenu(false)}  className='flex items-center cursor-pointer gap-2 relative'> {/* Removed ml-auto from this container */}
         <img src={user?.user.imageURL} className='w-12 min-w-[44px] object-cover rounded-full shadow-lg' alt="" referrerPolicy='no-referrer' />
         <div className='flex flex-col'>
             <p className='text-textColor text-lg hover:text-headingColor font-semibold'>{user?.user?.name}</p>

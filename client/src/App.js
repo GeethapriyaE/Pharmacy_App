@@ -10,6 +10,10 @@ import { validateUser } from './api';
 import { actionType } from './context/reducer';
 import { useStateValue } from './context/StateProvider';
 import Product from './components/Product/Product';
+import Productdetails from './components/ProductDetails/ProductDetails';
+import Cart from './components/Cart/Cart';
+import Checkout from './components/Checkout/Checkout';
+import Order from './components/Order/Order';
 const App = () => {
 
     const [{ user }, dispatch] = useStateValue();
@@ -49,7 +53,7 @@ const App = () => {
                     <Route path='/login' element={<Login setAuth={setAuth} />} />
                     <Route path='/*' element={<Home />} />
                     <Route path='/aboutus' element={<AboutUs />} />
-                    <Route path='/products' element={<Product />} />
+                    <Route path='/products' element={<Order />} />
                     <Route path='/contactus' element={<ContactUs />} />
                 </Routes>
             </div>

@@ -21,7 +21,7 @@ const Header = () => {
     };
 
     return (
-        <header className='flex items-center w-full p-4 md:py-2 md:px-6'>
+        <header className='flex items-center w-full p-2 md:py-2 md:px-6'>
             <NavLink to={"/"}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <strong style={{ color: '#75b239', fontSize: '26px', marginRight: '2px', '@media (maxWidth: 768px)': { fontSize: '14px' } }}>K.P.S</strong>
@@ -56,6 +56,7 @@ const Header = () => {
                 className='absolute z-10 flex flex-col p-2 top-12 right-0 w-275 gap-2 bg-card shadow-lg rounded-lg backdrop-blur-sm'>
                 <NavLink to={'/UserProfile'}>
                     <p className='text-base text-textColor hover:font-semibold duration-150 transition-all ease-in-out'>Profile</p>
+                    <p className='text-base text-textColor hover:font-semibold duration-150 transition-all ease-in-out'>Orders</p>
                 </NavLink>
                 <hr />
                 {user?.user?.role === "admin" && (

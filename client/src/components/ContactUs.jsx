@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ContactUs.css'; // Import ContactUs CSS file
+import GoogleMap from './GoogleMap'; // Import GoogleMap component
 
 const ContactUs = () => {
   const [name, setName] = useState('');
@@ -65,7 +66,7 @@ const ContactUs = () => {
   return (
     <div className="contact-container">
       <div className="image-container">
-        <img src="https://image.freepik.com/free-vector/pharmacy-with-nurse-counter_42515-341.jpg" alt="Pharmacy" />
+        <GoogleMap />
       </div>
       <div className="form-container">
         <h2>Contact Us</h2>

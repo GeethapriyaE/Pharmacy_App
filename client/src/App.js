@@ -53,7 +53,10 @@ const App = () => {
                     <Route path='/login' element={<Login setAuth={setAuth} />} />
                     <Route path='/*' element={<Home />} />
                     <Route path='/aboutus' element={<AboutUs />} />
-                    <Route path='/products' element={<Order />} />
+                    {/* <Route path='/products' element={<Order />} /> */}
+                    <Route path='/products' element={<Cart />} />
+                    {/* <Route path='/products' element={<Checkout />} />
+                    <Route path='/products' element={<Productdetails />} /> */}
                     <Route path='/contactus' element={<ContactUs />} />
                 </Routes>
             </div>

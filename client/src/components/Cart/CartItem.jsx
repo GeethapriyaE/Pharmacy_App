@@ -1,48 +1,68 @@
-import React from 'react';
-import Header from '../Header';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import {Button,IconButton} from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import React from "react";
+import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { removeCartItem, updateCartItem } from "../../Redux/Customers/Cart/Action";
+import { IconButton } from "@mui/material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
-const CartItem = () => {
+const CartItem = ({ item,showButton }) => {
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+
+  const handleRemoveItemFromCart = () => {
+    const data = { cartItemId: item?._id, jwt };
+    dispatch(removeCartItem(data));
+  };
+  const handleUpdateCartItem=(num)=>{
+    const data={data:{quantity:item.quantity+num}, cartItemId:item?._id, jwt}
+    console.log("update data ",data)
+    dispatch(updateCartItem(data))
+  }
   return (
-    
-      <div className=" p-5 shadow-lg border rounded-md mt-8">
-        <div className="flex items-center">
-          <div className="w-[5rem] h-[5rem] lg:w-[9rem] lg:h-[9rem]">
-            <img className="w-full h-full object-cover object-top" src="https://m.media-amazon.com/images/I/31-447juqeL._AC_UL480_FMwebp_QL65_.jpg" alt />
-          </div>
-
-          <div className="ml-5 space-y-1">
-            <p className='font-semibold'>Dolopar</p>
-            <p className="opacity-70 mt-2">Manufacturer: Microlabs Ltd</p>
-
-            <div className='flex space-x-5 items-center text-gray-900 pt-6'>
-              <p className='font-semibold'>₹199</p>
-              <p className='opacity-50  line-through'>₹300</p>
-              <p className='text-green-600 font-semibold'>25% off</p>
-            </div>
+    <div className="p-5 shadow-lg border rounded-md">
+      <div className="flex items-center">
+        <div className="w-[5rem] h-[5rem] lg:w-[9rem] lg:h-[9rem] ">
+          <img
+            className="w-full h-full object-cover object-top"
+            src={item?.product?.imageUrl}
+            alt=""
+          />
+        </div>
+        <div className="ml-5 space-y-1">
+          <p className="font-semibold">{item?.product?.title}</p>
+          <p className="opacity-70 mt-2">Seller: {item?.product?.brand}</p>
+          <div className="flex space-x-2 items-center pt-3">
+            <p className="opacity-50 line-through">₹{item?.product?.price}</p>
+            <p className="font-semibold text-lg">
+              ₹{item?.product?.discountedPrice}
+            </p>
+            <p className="text-green-600 font-semibold">
+              {item?.product?.discountPersent}% off
+            </p>
           </div>
         </div>
+      </div>
+     {showButton&& <div className="lg:flex items-center lg:space-x-10 pt-4">
+        <div className="flex items-center space-x-2 ">
+          <IconButton onClick={()=>handleUpdateCartItem(-1)} disabled={item?.quantity<=1} color="primary" aria-label="add an alarm">
+            <RemoveCircleOutlineIcon />
+          </IconButton>
 
-          <div className='lg:flex items-center lg:space-x-10 pt-4'>
-            <div className='flex items-center space-x-2'>
-            <IconButton >
-                    <RemoveCircleOutlineIcon />
-                </IconButton>
-                <span className='py-1 px-7 border rounded-sm'>3</span>
-                <IconButton sx={{color:"RGB(145 85 253)"}}>
-                    <AddCircleOutlineIcon />
-                </IconButton>
-                
-            </div>
-            <div>
-                <Button sx={{color:"RGB(145 85 253)"}}>
-                    remove
-                </Button>
-            </div>
-          </div>
+          <span className="py-1 px-7 border rounded-sm">{item?.quantity}</span>
+          <IconButton onClick={()=>handleUpdateCartItem(1)} color="primary" aria-label="add an alarm">
+            <AddCircleOutlineIcon />
+          </IconButton>
         </div>
+        <div className="flex text-sm lg:text-base mt-5 lg:mt-0">
+          
+          <Button onClick={handleRemoveItemFromCart} variant="text">
+            Remove{" "}
+          </Button>
+          
+        </div>
+      </div>}
+    </div>
   );
 };
 

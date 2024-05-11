@@ -1,57 +1,96 @@
-import React from 'react'
-import AddressCard from '../AddressCard/AddressCard'
-import { Grid, Button,Divider} from '@mui/material';
-import CartItem from '../Cart/CartItem'
+import React from "react";
+import { Badge, Button } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import CartItem from "../Cart/CartItem";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrderById } from "../../Redux/Customers/Order/Action";
+import AddressCard from "../AddressCard/AddressCard";
+import { createPayment } from "../../Redux/Customers/Payment/Action";
 
 const OrderSummary = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+const orderId = searchParams.get("order_id");
+const dispatch=useDispatch();
+  const jwt=localStorage.getItem("jwt");
+  const {order}=useSelector(state=>state)
+
+console.log("orderId ", order)
+
+useEffect(()=>{
+  
+  dispatch(getOrderById(orderId))
+},[orderId])
+
+const handleCreatePayment = async () => {
+  try {
+    const data = { orderId: order.order?._id, jwt };
+    await dispatch(createPayment(data));
+    navigate("/payment-success"); // Navigate to payment successful page
+  } catch (error) {
+    console.error("Error creating payment:", error);
+    // Handle error (e.g., display an error message to the user)
+  }
+};
+
+  
+  
+
   return (
-    <div>
-        
-        <div className='p-5 shadow-lg rounded-md border px-10'>
-            <AddressCard />
+    <div className="space-y-5">
+        <div className="p-5 shadow-lg rounded-md border ">
+            <AddressCard address={order.order?.shippingAddress}/>
         </div>
-        <div>
-
-      <div className="lg:grid grid-cols-3  relative">
-        <div className='col-span-2'>
-          {[1, 1, 1, 1].map((item, index) => (
-            <Grid key={index} item lg={12}>
-              <CartItem />
-            </Grid>
-          ))}
+      <div className="lg:grid grid-cols-3 relative justify-between">
+        <div className="lg:col-span-2 ">
+          <div className=" space-y-3">
+            {order.order?.orderItems.map((item) => (
+              <>
+                <CartItem item={item} showButton={false}/>
+              </>
+            ))}
+          </div>
         </div>
+        <div className="sticky top-0 h-[100vh] mt-5 lg:mt-0 ml-5">
+          <div className="border p-5 bg-white shadow-lg rounded-md">
+            <p className="font-bold opacity-60 pb-4">PRICE DETAILS</p>
+            <hr />
 
-        <div className="px-5 sticky top-0 h-[100vh] mt-5 lg:mt-8">
-          <div className='border'>
-            <p className='uppercase font-bold opacity-60 pb-4 px-2'>Price Details</p>
-            <Divider />
-            <div className='space-y-3 font-semibold mb-10'>
-              <div className='flex justify-between pt-3 text-black'>
-                <span>Price</span>
-                <span>₹14697</span>
+            <div className="space-y-3 font-semibold">
+              <div className="flex justify-between pt-3 text-black ">
+                <span>Price ({order.order?.totalItem} item)</span>
+                <span>₹{order.order?.totalPrice}</span>
               </div>
-              <div className='flex justify-between pt-3 '>
+              <div className="flex justify-between">
                 <span>Discount</span>
-                <span className='text-green-600'>₹3419</span>
+                <span className="text-green-700">-₹{order.order?.discounte}</span>
               </div>
-              <div className='flex justify-between pt-3 '>
-                <span>Delivery Charge</span>
-                <span className='text-green-600'>Free</span>
+              <div className="flex justify-between">
+                <span>Delivery Charges</span>
+                <span className="text-green-700">Free</span>
               </div>
-              <div className='flex justify-between pt-3 font-bold'>
+              <hr />
+              <div className="flex justify-between font-bold text-lg">
                 <span>Total Amount</span>
-                <span className='text-green-600'>₹1278</span>
+                <span className="text-green-700">₹{order.order?.totalDiscountedPrice}</span>
               </div>
             </div>
-            <Button color="secondary" variant="contained" className='w-full mt-5' sx={{ px: "2.5rem", py: "0.7rem", bgcolor: "#9155fd" }}>
-              CHECKOUT
+
+            <Button
+              onClick={handleCreatePayment}
+              variant="contained"
+              type="submit"
+              sx={{ padding: ".8rem 2rem", marginTop: "2rem", width: "100%" }}
+            >
+              Payment
             </Button>
           </div>
         </div>
       </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default OrderSummary
+export default OrderSummary;

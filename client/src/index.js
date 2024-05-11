@@ -8,13 +8,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { StateProvider } from "./context/StateProvider";
 import { initialState } from "./context/initialState";
 import reducer from "./context/reducer";
+import { Provider } from 'react-redux';
+import  store from './Redux/Store';
 
 ReactDOM.render(
     <React.StrictMode>
         <Router>
-        <StateProvider initialState={initialState} reducer={reducer}>
+        <Provider store={store} initialState={initialState} reducer={reducer}>
                 <App />
-            </StateProvider>
+            </Provider>
         </Router>
     </React.StrictMode>,
     document.getElementById('root')
